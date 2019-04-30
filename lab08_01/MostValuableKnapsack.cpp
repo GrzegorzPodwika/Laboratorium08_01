@@ -1,7 +1,7 @@
 #include "MostValuableKnapsack.h"
 using namespace std;
 		
-void computeAndShowData()
+void showResultsOnScreen()
 {
 	//wczytanie pliku z dysku
 	fstream inFile = createInputFile();
@@ -13,29 +13,29 @@ void computeAndShowData()
 	//utworzenie pomocniczych wektorow + wstepna inicjalizacja zerowych indexow zerami
 	vector <int> massOfItems(1);
 	vector <int> priceOfItems(1);
-	vector <int> numberOfItems(1);
+	vector <int> amountOfItems(1);
 
 	//wypelnianie vectorow pomocniczych wartosciami z pliku
 	fillVectorsWithDataFromFile(inFile, massOfItems, priceOfItems);
 
 	//wywolanie algorytmu zachlannego do problemu plecakowego
-	fillVectorByGreedyAlgorithm(maxMass, massOfItems, numberOfItems);
+	fillVectorByGreedyAlgorithm(maxMass, massOfItems, amountOfItems);
 
 	//obliczenie sumy wartosci rzeczy w plecaku
 	long long maxSum{};
 
-	for (unsigned int i = 1; i < numberOfItems.size(); i++)
+	for (unsigned int i = 1; i < amountOfItems.size(); i++)
 	{
-		maxSum += numberOfItems[i] * priceOfItems[i];
+		maxSum += amountOfItems[i] * priceOfItems[i];
 	}
 
 	//pokazanie wektora wynikowych wartosci na ekran
-	for (unsigned int i = 1; i < numberOfItems.size(); i++)
+	for (unsigned int i = 1; i < amountOfItems.size(); i++)
 	{
-		if (i == numberOfItems.size() - 1)
-			cout << numberOfItems[i] << endl;
+		if (i == amountOfItems.size() - 1)
+			cout << amountOfItems[i] << endl;
 		else
-			cout << numberOfItems[i] << ", ";
+			cout << amountOfItems[i] << ", ";
 	}
 
 	//pokazanie najwiekszej sumy na ekran
@@ -81,7 +81,7 @@ void fillVectorsWithDataFromFile(std::fstream & inFile, std::vector<int>& massOf
 	}
 }
 
-void fillVectorByGreedyAlgorithm(int maxMass, std::vector<int>& massOfItems, std::vector<int>& numberOfItems)
+void fillVectorByGreedyAlgorithm(int maxMass, std::vector<int>& massOfItems, std::vector<int>& amountOfItems)
 {
 
 	int i{};
@@ -96,7 +96,7 @@ void fillVectorByGreedyAlgorithm(int maxMass, std::vector<int>& massOfItems, std
 			{
 				if (i*massOfItems[k] > maxMass)
 				{
-					numberOfItems.push_back(i - 1);
+					amountOfItems.push_back(i - 1);
 					break;
 				}
 				i++;
@@ -104,10 +104,10 @@ void fillVectorByGreedyAlgorithm(int maxMass, std::vector<int>& massOfItems, std
 		}
 		else
 		{
-			numberOfItems.push_back(0);
+			amountOfItems.push_back(0);
 		}
 
-		maxMass -= numberOfItems[k] * massOfItems[k];
+		maxMass -= amountOfItems[k] * massOfItems[k];
 	}
 
 }
