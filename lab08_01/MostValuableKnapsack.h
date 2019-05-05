@@ -1,8 +1,9 @@
 #ifndef MOSTVALUABLEKNAPSACK_H
 #define MOSTVALUABLEKNAPSACK_H
+#include "libFiles.h"
+#include "libExceptions.h"
 #include <fstream>
 #include <vector>
-#include "libFiles.h"
 #include <iostream>
 #include <string>
 

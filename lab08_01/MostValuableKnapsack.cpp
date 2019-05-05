@@ -8,7 +8,17 @@ void showResultsOnScreen()
 
 	//wczytanie najwiekszej masy z pliku
 	int maxMass{};
-	inFile >> maxMass;
+	try
+	{
+		inFile >> maxMass;
+		if (maxMass <= 0)
+			throw EXCEPTION_CODE::notNaturalNumber;
+	}
+	catch (EXCEPTION_CODE error)
+	{
+		seeExceptions(error);
+		exit(0);
+	}
 
 	//utworzenie pomocniczych wektorow + wstepna inicjalizacja zerowych indexow zerami
 	vector <int> massOfItems(1);
@@ -92,6 +102,7 @@ void fillVectorByGreedyAlgorithm(int maxMass, std::vector<int>& massOfItems, std
 		i = 1;
 		if (maxMass > 0)
 		{
+			//inkrementujemy iterator i dopoki i*masa danego przedmiotu > maxMass, wtedy pushujemy o jeden mniejszy iterator do vektora liczby elementow k
 			while (true)
 			{
 				if (i*massOfItems[k] > maxMass)
